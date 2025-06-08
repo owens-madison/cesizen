@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Se Connecter</title>
+
+</head>
+<body>
+<img src="../static/media/logo.png"
+     style="display: flex; margin-top:60px; margin-left: auto; margin-right: auto; justify-content: center"
+     alt="cesizen logo"/>
+<div style="display:flex; margin:auto; margin-top:50px; justify-content: center; width:320px;">
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom:40px; align-items: center; display: flex; flex-wrap: wrap; justify-content: center;">
+            <input type="text" name="email" id="email" style="width:80%; outline:none; border: none;
+        border-bottom-style: solid; border-bottom-color: black; border-bottom-width: 1px; font-weight: lighter">
+            <label for="email" style="display: inline-block; text-align: center; width:80%; margin-top: 15px;">Adresse mail</label>
+        </div>
+        <div style="margin-bottom:40px; align-items: center; display: flex; flex-wrap: wrap; justify-content: center;">
+            <input type="text" name="username" id="username" style="display: inline-block; width:80%; outline:none; border: none;
+        border-bottom-style: solid; border-bottom-color: black; border-bottom-width: 1px; font-weight: lighter">
+            <label for="username" style="display: inline-block; text-align: center; width:80%; margin-top: 15px;">Nom d'utilisateur</label>
+        </div>
+        <div style="margin-bottom:40px; align-items: center; display: flex; flex-wrap: wrap; justify-content: center;">
+            <input type="password" name="password" id="password" style="display: inline-block; width:80%; outline:none; border: none; border-bottom-style: solid;
+        border-bottom-color: black; border-bottom-width: 1px;">
+            <label for="password" style="display: inline-block; text-align: center; width:80%; margin-top: 15px;">Mot de passe</label>
+        </div>
+        <div style="margin-bottom:40px; align-items: center; display: flex; flex-wrap: wrap; justify-content: center;">
+            <input type="text" name="firstname" id="firstname" style="display: inline-block; width:80%; outline:none; border: none;
+        border-bottom-style: solid; border-bottom-color: black; border-bottom-width: 1px; font-weight: lighter">
+            <label for="firstname" style="display: inline-block; text-align: center; width:80%; margin-top: 15px;">Prénom</label>
+        </div>
+        <div style="margin-bottom:40px; align-items: center; display: flex; flex-wrap: wrap; justify-content: center;">
+            <input type="text" name="lastname" id="lastname" style="display: inline-block; width:80%; outline:none; border: none;
+        border-bottom-style: solid; border-bottom-color: black; border-bottom-width: 1px; font-weight: lighter">
+            <label for="lastname" style="display: inline-block; text-align: center; width:80%; margin-top: 15px;">Nom</label>
+        </div>
+        <input type="submit" value="S'inscrire" style="justify-content: center; width:50%; height:40px; font-size: 90%; border-style: solid;
+        border-color: black; border-width: 1px; border-radius: 10px; background:none; margin-left:auto; margin-right:auto; display:flex">
+    </form>
+</div>
+<a href="/"
+   style="justify-content: center; margin-top: 15px; margin-bottom: 100px; margin-right: auto; margin-left: auto; display: flex; line-height: 25px; text-decoration: none; color: black;">
+    Se connecter </a>
+</body>
+</html>
