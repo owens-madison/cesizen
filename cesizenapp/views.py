@@ -5,11 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-
 # Create your views here.
 
 @login_required
 def home(request):
+    user = request.user
+    print(user.username)
     return render(request, 'home.html')
 
 def login(request):
