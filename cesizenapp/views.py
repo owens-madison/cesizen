@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from .models import Information
 
 # Create your views here.
 
@@ -42,3 +43,8 @@ def signup(request):
     return render(request, 'signup.html')
 
 
+def home(request):
+    informations = Information.objects.all()
+    for x in informations:
+        print(x.title)
+    return render(request, 'home.html', {'informations': informations})

@@ -1,17 +1,32 @@
 import datetime
 import uuid
+
+from django.contrib.auth import user_logged_in
 from django.contrib.auth.models import User
 from django.db import models
+from django.http import request
+
 
 # Create your models here.
 
 class Information(models.Model):
+    CATEGORY = [
+        ('SANTE-MENTAL', 'Comprendre la santé mentale'),
+        ('RECONNAITRE-LE-STRESS', 'Reconnaître le stress'),
+        ('GESTION-DU-STRESS', 'Techniques de gestion du stress'),
+        ('COMPTRENDRE-EMOTIONS', 'Comprendre ses émotions'),
+        ('HABITUDES', 'Habitude de vie et auto-soin'),
+        ('ACTIVITES', 'Activités de détente'),
+        ('DEMANDER-L-AIDE', 'Quand demander de l`aide'),
+        ('SOUTENIR', 'Soutenir un proche'),
+        ('DRAFT', 'Unavailable to the public')
+    ]
     idInformation = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, null=False)
     content = models.FileField(null=False)
     caption = models.CharField(max_length=100)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, editable=False, null=False)
-    publicationDate = models.DateTimeField(null=False)
+    category = models.CharField(max_length=200, null=False, choices=CATEGORY, default='DRAFT')
+    publicationDate = models.DateTimeField(auto_now_add=True, null=False)
 
 class Comment(models.Model):
     idComment = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

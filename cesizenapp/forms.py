@@ -10,7 +10,7 @@ class CreateUserForm(forms.modelForm):
 class CreateInformationForm(forms.modelForm):
     class meta:
         model = Information
-        fields = ['title', 'content', 'caption', 'author', 'publicationDate']
+        fields = ['title', 'content', 'caption', 'author', 'category', 'publicationDate']
 
 class CreateCommentForm(forms.modelForm):
     class meta:

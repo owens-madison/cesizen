@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-  <p>Home</p>
+    <div style = "width: 200px; margin-left: 20px;">
+        <a href="" style = "text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Informations </p>
+        </a>
+        <a href="" style = "text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Diagnostic </p>
+        </a>
+        <a href="" style = "text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Compte </p>
+        </a>
+    </div>
+    <div>
+        {% for info in informations %}
+            <div>
+                <h2> {{ info.title }}</h2>
+                <h3> {{ info.caption }}</h3>
+                <a href="{{ info.content }}"></a>
+                <p> {{ info.publicationDate }}</p>
+            </div>
+
+        {% endfor %}
+    </div>
 </head>
 <body>
-
 </body>
 </html>
