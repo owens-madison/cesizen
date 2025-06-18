@@ -19,10 +19,9 @@
             <div>
                 <h2> {{ info.title }}</h2>
                 <h3> {{ info.caption }}</h3>
-                <a href="{{ info.content }}"></a>
+                <img src="{{ info.image.url }}"/>
                 <p> {{ info.publicationDate }}</p>
             </div>
-
         {% endfor %}
     </div>
 </head>

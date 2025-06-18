@@ -4,7 +4,7 @@ from .models import Information, Comment, Diagnostic
 # Register your models here.
 @admin.register(Information)
 class InformationAdmin(admin.ModelAdmin):
-    list_display = ('idInformation', 'title', 'content', 'caption', 'category', 'publicationDate')
+    list_display = ('idInformation', 'title', 'content', 'caption', 'category', 'image', 'alt', 'publicationDate')
     readonly_fields = ('idInformation', 'publicationDate')
 
 @admin.register(Comment)

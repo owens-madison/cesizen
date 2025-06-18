@@ -1,10 +1,6 @@
-import datetime
 import uuid
-
-from django.contrib.auth import user_logged_in
 from django.contrib.auth.models import User
 from django.db import models
-from django.http import request
 
 
 # Create your models here.
@@ -23,8 +19,10 @@ class Information(models.Model):
     ]
     idInformation = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, null=False)
-    content = models.FileField(null=False)
     caption = models.CharField(max_length=100)
+    content = models.CharField(max_length=1000, null=False)
+    image = models.ImageField(upload_to="images", null=True)
+    alt = models.CharField(max_length=50, null=True)
     category = models.CharField(max_length=200, null=False, choices=CATEGORY, default='DRAFT')
     publicationDate = models.DateTimeField(auto_now_add=True, null=False)
 
