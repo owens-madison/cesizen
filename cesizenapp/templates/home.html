@@ -3,24 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <div style = "width: 200px; margin-left: 20px;">
-        <a href="" style = "text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+    <div style="width: 200px; margin-left: 20px;">
+        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Informations </p>
         </a>
-        <a href="" style = "text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Diagnostic </p>
         </a>
-        <a href="" style = "text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Compte </p>
         </a>
     </div>
-    <div>
+    <div style= "display: flex; justify-content: center; margin: auto; margin-bottom: 50px; ">
+        <select name="infoCategory" style="outline:none; background: none; appearance: none; font-size: medium; text-align: center; padding-left: 25px; padding-right: 25px; border: none;">
+            {% for x in informations %}
+                {% for y in x.CATEGORY %}
+                <option value="{{ y.1 }}">{{ y.1 }}</option>
+                    {% endfor %}
+            {% endfor %}
+        </select>
+        <button type="submit" style="background-color: black; color: white; width: 60px; height: 25px; border:none; margin-left: 25px; border-radius: 5px">
+            Go
+        </button>
+    </div>
+    <div style="margin:auto; width: 700px; display: flex; justify-content: center;">
         {% for info in informations %}
-            <div>
-                <h2> {{ info.title }}</h2>
-                <h3> {{ info.caption }}</h3>
-                <img src="{{ info.image.url }}"/>
-                <p> {{ info.publicationDate }}</p>
+            <div style="border-top-style: solid; border-top-color: black; border-top-width: 1px">
+                <h2 style="text-align: center; font-size: 200%;"> {{ info.title }}</h2>
+                <h3 style="text-align: center; font-weight: lighter; font-style: italic"> {{ info.caption }}</h3>
+                <img src="{{ info.image.url }}"
+                     style="width: 200px; justify-content: center; margin: auto; display: flex; height: auto;"/>
+                <p style="line-height: 35px; font-weight: lighter"> {{ info.content }}</p>
+                <p style="color: grey; font-weight: lighter; text-align: end"> {{ info.publicationDate }}</p>
             </div>
         {% endfor %}
     </div>
