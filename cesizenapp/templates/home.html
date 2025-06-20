@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Informations</title>
     <div style="width: 200px; margin-left: 20px;">
-        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+        <a href="{% url 'cesizenapp:home' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Informations </p>
         </a>
         <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
@@ -20,26 +20,24 @@
         {% endif %}
     </div>
     <div style="display: flex; justify-content: center; margin: auto; margin-bottom: 50px; ">
-        <form method="get" action="/home/">
+        <form method="get" action="/">
             <select name="infoCategory"
                     style="outline:none; background: none; appearance: none; font-size: medium; text-align: center; padding-left: 25px; padding-right: 25px; border: none;">
-                {% for x in informations %}
-                    {% for y in x.CATEGORY %}
-                        <option value="{{ y.0 }}" {% if selected_category == y.0 %} selected {% endif %}>
-                            {{ y.1 }}
-                        </option>
-                    {% endfor %}
-                {% endfor %}
-            </select>
+    {% for code, label in category_choices %}
+        <option value="{{ code }}" {% if selected_category == code %} selected {% endif %}>
+            {{ label }}
+        </option>
+    {% endfor %}
+</select>
             <button type="submit"
                     style="background-color: black; color: white; width: 60px; height: 25px; border:none; margin-left: 25px; border-radius: 5px">
                 Go
             </button>
         </form>
     </div>
-    <div style="margin:auto; width: 700px; display: flex; justify-content: center;">
+    <div style="margin:auto; width: 700px; display: block; justify-content: center;">
         {% for post in posts %}
-            <div style="border-top-style: solid; border-top-color: black; border-top-width: 1px">
+            <div style=" margin-bottom: 100px; border-top-style: solid; border-top-color: black; border-top-width: 1px">
                 <h2 style="text-align: center; font-size: 200%;"> {{ post.title }}</h2>
                 <h3 style="text-align: center; font-weight: lighter; font-style: italic"> {{ post.caption }}</h3>
                 <img src="{{ post.image.url }}"

@@ -2,22 +2,20 @@ from django import forms
 from django.contrib.auth.models import User
 from cesizenapp.models import Information, Comment, Diagnostic
 
-class CreateUserForm(forms.modelForm):
-    class meta:
+class CreateUserForm(forms.ModelForm):
+    class Meta:
         model = User
         fields = ['email', 'username', 'password', 'first_name', 'last_name', 'is_superuser']
 
-class CreateInformationForm(forms.modelForm):
-    class meta:
+class CreateInformationForm(forms.ModelForm):
+    class Meta:
         model = Information
-        fields = ['title', 'content', 'caption', 'author', 'category', 'publicationDate']
+        fields = ['title', 'content', 'caption', 'image', 'alt', 'category']
+        widgets = {
+            'title': forms.TextInput(attrs={'style': 'color:red;'})
+        }
 
-class CreateCommentForm(forms.modelForm):
-    class meta:
+class CreateCommentForm(forms.ModelForm):
+    class Meta:
         model = Comment
-        fields = ['comment', 'commenter', 'commentDate']
-
-class CreateDiagnosticForm(forms.modelForm):
-    class meta:
-        model = Diagnostic
-        fields = ['score', 'result', 'diagnosticDate', 'diagnosticUser']
+        fields = ['comment']

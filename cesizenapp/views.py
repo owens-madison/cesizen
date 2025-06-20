@@ -6,11 +6,12 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import length
 
+from .forms import CreateInformationForm
 from .models import Information
 
 # Create your views here.
 
-@login_required
+# @login_required
 def home(request):
     user = request.user
     print(user.username)
@@ -48,9 +49,23 @@ def signup(request):
 def home(request):
     informations = Information.objects.all()
     selected_category = request.GET.get('infoCategory')
+    category_choices = Information.CATEGORY
+
+    if not selected_category:
+        selected_category = Information.CATEGORY[0][0]
+
     posts = Information.objects.filter(category=selected_category)
-    post_length = length(posts)
-    return render(request, 'home.html', {'informations': informations, 'posts': posts, 'selected_category': selected_category, 'post_length': post_length})
+    post_length = posts.count()
+
+    return render(request, 'home.html', {'informations': informations, 'posts': posts, 'selected_category': selected_category, 'category_choices': category_choices,'post_length': post_length})
 
 def postInformation(request):
-    return render(request, 'postInformation.html')
+    if request.method == 'POST':
+        form = CreateInformationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Post created successfully!")
+            form = CreateInformationForm()
+    else:
+        form = CreateInformationForm()
+    return render(request, 'postInformation.html', {'form': form})
