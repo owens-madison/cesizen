@@ -47,4 +47,7 @@ def signup(request):
 
 def home(request):
     informations = Information.objects.all()
-    return render(request, 'home.html', {'informations': informations})
+    selected_category = request.GET.get('infoCategory')
+    posts = Information.objects.filter(category=selected_category)
+    post_length = length(posts)
+    return render(request, 'home.html', {'informations': informations, 'posts': posts, 'selected_category': selected_category, 'post_length': post_length})

@@ -13,30 +13,54 @@
         <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Compte </p>
         </a>
+        {% if user.is_superuser %}
+            <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+                <p> Rediger un post </p>
+            </a>
+        {% endif %}
     </div>
-    <div style= "display: flex; justify-content: center; margin: auto; margin-bottom: 50px; ">
-        <select name="infoCategory" style="outline:none; background: none; appearance: none; font-size: medium; text-align: center; padding-left: 25px; padding-right: 25px; border: none;">
-            {% for x in informations %}
-                {% for y in x.CATEGORY %}
-                <option value="{{ y.1 }}">{{ y.1 }}</option>
+    <div style="display: flex; justify-content: center; margin: auto; margin-bottom: 50px; ">
+        <form method="get" action="/home/">
+            <select name="infoCategory"
+                    style="outline:none; background: none; appearance: none; font-size: medium; text-align: center; padding-left: 25px; padding-right: 25px; border: none;">
+                {% for x in informations %}
+                    {% for y in x.CATEGORY %}
+                        <option value="{{ y.0 }}" {% if selected_category == y.0 %} selected {% endif %}>
+                            {{ y.1 }}
+                        </option>
                     {% endfor %}
-            {% endfor %}
-        </select>
-        <button type="submit" style="background-color: black; color: white; width: 60px; height: 25px; border:none; margin-left: 25px; border-radius: 5px">
-            Go
-        </button>
+                {% endfor %}
+            </select>
+            <button type="submit"
+                    style="background-color: black; color: white; width: 60px; height: 25px; border:none; margin-left: 25px; border-radius: 5px">
+                Go
+            </button>
+        </form>
     </div>
     <div style="margin:auto; width: 700px; display: flex; justify-content: center;">
-        {% for info in informations %}
+        {% for post in posts %}
             <div style="border-top-style: solid; border-top-color: black; border-top-width: 1px">
-                <h2 style="text-align: center; font-size: 200%;"> {{ info.title }}</h2>
-                <h3 style="text-align: center; font-weight: lighter; font-style: italic"> {{ info.caption }}</h3>
-                <img src="{{ info.image.url }}"
+                <h2 style="text-align: center; font-size: 200%;"> {{ post.title }}</h2>
+                <h3 style="text-align: center; font-weight: lighter; font-style: italic"> {{ post.caption }}</h3>
+                <img src="{{ post.image.url }}"
                      style="width: 200px; justify-content: center; margin: auto; display: flex; height: auto;"/>
-                <p style="line-height: 35px; font-weight: lighter"> {{ info.content }}</p>
-                <p style="color: grey; font-weight: lighter; text-align: end"> {{ info.publicationDate }}</p>
+                <p style="line-height: 35px; font-weight: lighter"> {{ post.content }}</p>
+                <div style="display: flex; justify-content: space-between;">
+                    {% if user.is_superuser %}
+                        <a href="" style="width: 30%; text-decoration: none; color: black;">
+                        <p> Modifier </p>
+                        </a>
+                        <a href="" style="width: 30%; text-decoration: none; color: red;">
+                        <p> Supprimer </p>
+                        </a>
+                    {% endif %}
+                    <p style="width: 30%; color: grey; font-weight: lighter; text-align: end"> {{ post.publicationDate }}</p>
+                </div>
             </div>
         {% endfor %}
+        {% if post_length == 0 %}
+            <p> Il n'y a pas de posts publiés dans cette catégorie. Merci d'en choisir une autre. </p>
+        {% endif %}
     </div>
 </head>
 <body>
