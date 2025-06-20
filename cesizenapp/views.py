@@ -51,3 +51,6 @@ def home(request):
     posts = Information.objects.filter(category=selected_category)
     post_length = length(posts)
     return render(request, 'home.html', {'informations': informations, 'posts': posts, 'selected_category': selected_category, 'post_length': post_length})
+
+def postInformation(request):
+    return render(request, 'postInformation.html')

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Informations</title>
     <div style="width: 200px; margin-left: 20px;">
         <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Informations </p>
@@ -14,7 +14,7 @@
             <p> Compte </p>
         </a>
         {% if user.is_superuser %}
-            <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <a href="/postInformation/" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
                 <p> Rediger un post </p>
             </a>
         {% endif %}
