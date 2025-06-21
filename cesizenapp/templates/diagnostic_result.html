@@ -1,0 +1,17 @@
+<div style="display: flex; justify-content: center; margin: auto; text-align: center; flex-wrap: wrap;">
+    <h2 style="width: 100%;">Your Stress Score: {{ score }}</h2>
+    <p style="margin-bottom: 50px;">{{ result_msg }}</p>
+</div>
+
+{% if show_save_button %}
+<div>
+    <form method="POST" action="{% url 'cesizenapp:save_diagnostic' %}">
+        {% csrf_token %}
+        <input type="hidden" name="score" value="{{ score }}">
+        <input type="hidden" name="result_msg" value="{{ result_msg }}">
+        <button type="submit" style="background-color: green; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+            Enregistrer
+        </button>
+    </form>
+</div>
+{% endif %}

@@ -3,24 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Rédiger un post</title>
-    <div style="width: 200px; margin-left: 20px;">
-        <a href= "{% url 'cesizenapp:home' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Informations </p>
-        </a>
-        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Diagnostic </p>
-        </a>
-        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Compte </p>
-        </a>
-        {% if user.is_superuser %}
-            <a href="{% url 'cesizenapp:postInformation' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-                <p> Rédiger un post </p>
-            </a>
-        {% endif %}
-    </div>
 </head>
 <body>
+{% include 'navigationMenu.html' %}
 <h2 style = "text-align: center; display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px;"> Rediger un post </h2>
 <div style="justify-content: center; display: flex; width: 300px; margin: auto;">
 <form method="post" enctype="multipart/form-data">
@@ -63,7 +48,7 @@
         </label><br>
         {{ form.category }}
     </div>
-<button type="submit" style="background-color: black; color: white; font-size: 100%; margin-top: 50px; margin-bottom: 150px; width: 125px; height: 40px; justify-content: center; display: flex; outline: none; border: none; align-items: center; margin-left: auto; margin-right: auto">
+<button type="submit" style="background-color: black; color: white; font-size: 100%; margin-top: 50px; margin-bottom: 75px; width: 125px; height: 40px; justify-content: center; display: flex; outline: none; border: none; align-items: center; margin-left: auto; margin-right: auto">
     {% if is_edit %}
         Modifier
         {% else %}

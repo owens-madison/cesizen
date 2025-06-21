@@ -1,0 +1,27 @@
+    <div style="width: 200px; margin-left: 20px;">
+        <a href="{% url 'cesizenapp:home' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Informations </p>
+        </a>
+        <a href="{% url 'cesizenapp:diagnostic' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Diagnostic </p>
+        </a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'cesizenapp:account' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Compte </p>
+        </a>
+        {% else %}
+        <a href="{% url 'cesizenapp:login' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Se connecter </p>
+        </a>
+    {% endif %}
+        {% if user.is_superuser %}
+            <a href="{% url 'cesizenapp:postInformation' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+                <p> Rédiger un post </p>
+            </a>
+        {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'cesizenapp:logout' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: red;">
+            <p> Se déconnecter </p>
+        </a>
+{% endif %}
+    </div>

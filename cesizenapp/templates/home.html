@@ -3,22 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Informations</title>
-    <div style="width: 200px; margin-left: 20px;">
-        <a href="{% url 'cesizenapp:home' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Informations </p>
-        </a>
-        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Diagnostic </p>
-        </a>
-        <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Compte </p>
-        </a>
-        {% if user.is_superuser %}
-            <a href="/postInformation/" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-                <p> Rediger un post </p>
-            </a>
-        {% endif %}
-    </div>
+</head>
+<body>
+{% include 'navigationMenu.html' %}
     <div style="display: flex; justify-content: center; margin: auto; margin-bottom: 50px; ">
         <form method="get" action="/">
             <select name="infoCategory"
@@ -62,8 +49,6 @@
             <p> Il n'y a pas de posts publiés dans cette catégorie. Merci d'en choisir une autre. </p>
         {% endif %}
     </div>
-</head>
-<body>
 </body>
 </html>
 

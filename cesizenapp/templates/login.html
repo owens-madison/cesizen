@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Se Connecter</title>
-
 </head>
 <body>
     {% for message in messages %}
@@ -27,7 +26,7 @@
         border-color: black; border-width: 1px; border-radius: 10px; background:none; margin-left:auto; margin-right:auto; display:flex">
     </form>
 </div>
-<a href= "/signup/" style="justify-content: center; margin-top: 25px; margin-right: auto; margin-left: auto; display: flex; line-height: 25px; text-decoration: none; color: black;"> Créer un compte </a>
+<a href= "{% url 'cesizenapp:signup' %}" style="justify-content: center; margin-top: 25px; margin-right: auto; margin-left: auto; display: flex; line-height: 25px; text-decoration: none; color: black;"> Créer un compte </a>
 </body>
 </html>
 

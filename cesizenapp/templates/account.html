@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compte</title>
+</head>
+<body>
+{% include 'navigationMenu.html' %}
+<h2>Mon compte</h2>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" name="update_info">Update Info</button>
+</form>
+
+<h3>Change Password</h3>
+<form method="POST">
+  {% csrf_token %}
+  {{ pass_form.as_p }}
+  <button type="submit" name="change_password">Change Password</button>
+</form>
+
+<h3>Deactivate Account</h3>
+<form method="POST">
+  {% csrf_token %}
+  <button type="submit" name="deactivate_account" onclick="return confirm('Are you sure?');">Deactivate Account</button>
+</form>
+</body>
