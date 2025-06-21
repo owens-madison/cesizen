@@ -20,7 +20,7 @@ class Information(models.Model):
     idInformation = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, null=False)
     caption = models.CharField(max_length=100)
-    content = models.CharField(max_length=1000, null=False)
+    content = models.CharField(max_length=5000, null=False)
     image = models.ImageField(upload_to="images", null=True)
     alt = models.CharField(max_length=50, null=True)
     category = models.CharField(max_length=200, null=False, choices=CATEGORY, default='DRAFT')

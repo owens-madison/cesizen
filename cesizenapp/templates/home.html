@@ -45,7 +45,7 @@
                 <p style="line-height: 35px; font-weight: lighter"> {{ post.content }}</p>
                 <div style="display: flex; justify-content: space-between;">
                     {% if user.is_superuser %}
-                        <a href="" style="width: 30%; text-decoration: none; color: black;">
+                        <a href="{% url 'cesizenapp:edit_post' post.idInformation%}" style="width: 30%; text-decoration: none; color: black;">
                         <p> Modifier </p>
                         </a>
                         <a href="" style="width: 30%; text-decoration: none; color: red;">

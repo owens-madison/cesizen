@@ -56,7 +56,6 @@ def home(request):
 
     posts = Information.objects.filter(category=selected_category)
     post_length = posts.count()
-
     return render(request, 'home.html', {'informations': informations, 'posts': posts, 'selected_category': selected_category, 'category_choices': category_choices,'post_length': post_length})
 
 def postInformation(request):
@@ -68,4 +67,18 @@ def postInformation(request):
             form = CreateInformationForm()
     else:
         form = CreateInformationForm()
+    return render(request, 'postInformation.html', {'form': form})
+
+def edit_post(request, post_id):
+    post = Information.objects.get(idInformation=post_id)
+
+    if request.method == 'POST':
+        form = CreateInformationForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Le post a été modifié avec succès.")
+            return redirect('cesizenapp:home')
+    else:
+        form = CreateInformationForm(instance=post)
+
     return render(request, 'postInformation.html', {'form': form})
