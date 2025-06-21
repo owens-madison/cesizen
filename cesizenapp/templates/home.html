@@ -48,8 +48,10 @@
                         <a href="{% url 'cesizenapp:edit_post' post.idInformation%}" style="width: 30%; text-decoration: none; color: black;">
                         <p> Modifier </p>
                         </a>
-                        <a href="" style="width: 30%; text-decoration: none; color: red;">
-                        <p> Supprimer </p>
+                        <a href="{% url 'cesizenapp:delete_post' post.idInformation %}"
+                           style="width: 30%; text-decoration: none; color: red;"
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?');">
+                            <p> Supprimer </p>
                         </a>
                     {% endif %}
                     <p style="width: 30%; color: grey; font-weight: lighter; text-align: end"> {{ post.publicationDate }}</p>
@@ -64,3 +66,11 @@
 <body>
 </body>
 </html>
+
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            alert("{{ message|escapejs }}");
+        {% endfor %}
+    {% endif %}
+</script>

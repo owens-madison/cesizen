@@ -67,10 +67,10 @@ def postInformation(request):
             form = CreateInformationForm()
     else:
         form = CreateInformationForm()
-    return render(request, 'postInformation.html', {'form': form})
+    return render(request, 'postInformation.html', {'form': form, 'is_edit': False})
 
 def edit_post(request, post_id):
-    post = Information.objects.get(idInformation=post_id)
+    post = get_object_or_404(Information, idInformation=post_id)
 
     if request.method == 'POST':
         form = CreateInformationForm(request.POST, request.FILES, instance=post)
@@ -81,4 +81,17 @@ def edit_post(request, post_id):
     else:
         form = CreateInformationForm(instance=post)
 
-    return render(request, 'postInformation.html', {'form': form})
+    return render(request, 'postInformation.html', {'form': form, 'is_edit': True})
+
+from django.shortcuts import get_object_or_404
+
+def delete_post(request, post_id):
+    post = get_object_or_404(Information, idInformation=post_id)
+
+    if request.user.is_superuser:
+        post.delete()
+        messages.success(request, "Le post a été supprimé avec succès.")
+    else:
+        messages.error(request, "Vous n'avez pas la permission de supprimer ce post.")
+
+    return redirect('cesizenapp:home')
