@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>Delete Stress Event</h1>
+<p>Are you sure you want to delete "{{ stress_event.description }}"?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+  <a href="{% url 'cesizenapp:stress_event_list' %}">Cancel</a>
+</form>
+</body>
+</html>

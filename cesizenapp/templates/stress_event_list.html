@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <h1>Stress Events</h1>
+  <a href="{% url 'cesizenapp:stress_event_create' %}">Create New Stress Event</a>
+  <ul>
+    {% for event in events %}
+      <li>
+        {{ event.description }} ({{ event.score }} points)
+        <a href="{% url 'cesizenapp:stress_event_edit' event.id %}">Edit</a> |
+        <a href="{% url 'cesizenapp:stress_event_delete' event.id %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

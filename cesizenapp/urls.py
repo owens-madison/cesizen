@@ -18,4 +18,13 @@ urlpatterns = [
     path('administration/users/<int:user_id>/edit/', views.admin_user_edit, name='admin_user_edit'),
     path('administration/users/<int:user_id>/delete/', views.admin_user_delete, name='admin_user_delete'),
     path('stress-quiz/', views.stress_quiz, name='stress_quiz'),
+    path('administration/stress-events/', views.stress_event_list, name='stress_event_list'),
+    path('administration/stress-events/create/', views.stress_event_edit, name='stress_event_create'),
+    path('administration/stress-events/<int:event_id>/edit/', views.stress_event_edit, name='stress_event_edit'),
+    path('administration/stress-events/<int:event_id>/delete/', views.stress_event_delete, name='stress_event_delete'),
+    path('administration/results/', views.results_list, name='results_list'),
+    path('administration/results/create/', views.results_edit, name='results_create'),
+    path('administration/results/<int:result_id>/edit/', views.results_edit, name='results_edit'),
+    path('administration/results/<int:result_id>/delete/', views.results_delete, name='results_delete'),
+    path('administration/stress-events/create/', views.stress_event_create, name='stress_event_create'),
 ]

@@ -3,7 +3,7 @@
             <p> Informations </p>
         </a>
         <a href="{% url 'cesizenapp:stress_quiz' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Informations </p>
+            <p> Diagnostic </p>
         </a>
     {% if user.is_authenticated %}
         <a href="{% url 'cesizenapp:account' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
@@ -20,6 +20,12 @@
             </a>
             <a href="{% url 'cesizenapp:admin_user_list' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
                 <p> AdComptes </p>
+            </a>
+            <a href="{% url 'cesizenapp:stress_event_list' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+                <p> AdStress </p>
+            </a>
+            <a href="{% url 'cesizenapp:results_list' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+                <p> AdResults </p>
             </a>
         {% endif %}
     {% if user.is_authenticated %}

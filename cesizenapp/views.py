@@ -7,7 +7,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.shortcuts import render, redirect
-from .forms import CreateInformationForm, AccountForm, StressEventForm
+from .forms import CreateInformationForm, AccountForm, StressEventForm, ResultsForm
 from .models import Information, StressEvent, Results
 
 
@@ -206,11 +206,87 @@ def stress_quiz(request):
                 if form.cleaned_data.get('selected', False):
                     total_score += form.cleaned_data.get('score', 0)
 
+            # Find the matching Results entry
             result = Results.objects.filter(min_score__lte=total_score, max_score__gte=total_score).first()
             return render(request, 'stress_quiz_result.html', {'total_score': total_score, 'result': result})
 
     else:
+        # Initialize formset with StressEvent data
         initial_data = [{'description': se.description, 'score': se.score} for se in stress_events]
         formset = StressFormSet(initial=initial_data)
 
     return render(request, 'stress_quiz.html', {'formset': formset})
+
+@user_passes_test(admin_check)
+def stress_event_list(request):
+    events = StressEvent.objects.all()
+    return render(request, 'stress_event_list.html', {'events': events})
+
+@user_passes_test(admin_check)
+def stress_event_edit(request, event_id=None):
+    if event_id:
+        event = get_object_or_404(StressEvent, pk=event_id)
+    else:
+        event = None
+
+    if request.method == 'POST':
+        form = StressEventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Stress event saved.")
+            return redirect('cesizenapp:stress_event_list')
+    else:
+        form = StressEventForm(instance=event)
+
+    return render(request, 'stress_event_form.html', {'form': form})
+
+def stress_event_create(request):
+    if request.method == 'POST':
+        form = StressEventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('stress_event_list')
+    else:
+        form = StressEventForm()
+    return render(request, 'stress_event_form.html', {'form': form})
+
+@user_passes_test(admin_check)
+def stress_event_delete(request, event_id):
+    event = get_object_or_404(StressEvent, pk=event_id)
+    if request.method == 'POST':
+        event.delete()
+        messages.success(request, "Stress event deleted.")
+        return redirect('cesizenapp:stress_event_list')
+    return render(request, 'stress_event_confirm_delete.html', {'event': event})
+
+@user_passes_test(admin_check)
+def results_list(request):
+    results = Results.objects.all().order_by('min_score')
+    return render(request, 'results_list.html', {'results': results})
+
+@user_passes_test(admin_check)
+def results_edit(request, result_id=None):
+    if result_id:
+        result = get_object_or_404(Results, pk=result_id)
+    else:
+        result = None
+
+    if request.method == 'POST':
+        form = ResultsForm(request.POST, instance=result)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Result saved.")
+            return redirect('cesizenapp:results_list')
+    else:
+        form = ResultsForm(instance=result)
+
+    return render(request, 'results_form.html', {'form': form})
+
+@user_passes_test(admin_check)
+def results_delete(request, result_id):
+    result = get_object_or_404(Results, pk=result_id)
+    if request.method == 'POST':
+        result.delete()
+        messages.success(request, "Result deleted.")
+        return redirect('cesizenapp:results_list')
+    return render(request, 'results_confirm_delete.html', {'result': result})

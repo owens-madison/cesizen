@@ -38,10 +38,16 @@ class AccountForm(forms.ModelForm):
             raise forms.ValidationError("This username is already taken.")
         return username
 
-class StressEventForm(forms.Form):
-    selected = forms.BooleanField(required=False, label="")
-    description = forms.CharField(widget=forms.HiddenInput())
-    score = forms.IntegerField(widget=forms.HiddenInput())
+class StressEventForm(forms.ModelForm):
+    selected = forms.BooleanField(required=False, label='Select this stress event')
+
+    class Meta:
+        model = StressEvent
+        fields = ['description', 'score', 'selected']
+        widgets = {
+            'description': forms.TextInput(attrs={'readonly': 'readonly', 'style': 'border:none; background:none;'}),
+            'score': forms.HiddenInput(),
+        }
 
 class ResultsForm(forms.ModelForm):
     class Meta:
