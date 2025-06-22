@@ -5,9 +5,10 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
+from django.forms import formset_factory
 from django.shortcuts import render, redirect
-from .forms import CreateInformationForm, AccountForm
-from .models import Information
+from .forms import CreateInformationForm, AccountForm, StressEventForm
+from .models import Information, StressEvent, Results
 
 
 # Create your views here.
@@ -192,3 +193,24 @@ def admin_user_delete(request, user_id):
         messages.success(request, "User deleted.")
         return redirect('cesizenapp:admin_user_list')
     return render(request, 'admin_user_confirm_delete.html', {'user_obj': user})
+
+def stress_quiz(request):
+    StressFormSet = formset_factory(StressEventForm, extra=0)
+    stress_events = StressEvent.objects.all()
+
+    if request.method == 'POST':
+        formset = StressFormSet(request.POST)
+        if formset.is_valid():
+            total_score = 0
+            for form in formset:
+                if form.cleaned_data.get('selected', False):
+                    total_score += form.cleaned_data.get('score', 0)
+
+            result = Results.objects.filter(min_score__lte=total_score, max_score__gte=total_score).first()
+            return render(request, 'stress_quiz_result.html', {'total_score': total_score, 'result': result})
+
+    else:
+        initial_data = [{'description': se.description, 'score': se.score} for se in stress_events]
+        formset = StressFormSet(initial=initial_data)
+
+    return render(request, 'stress_quiz.html', {'formset': formset})

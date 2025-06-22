@@ -17,4 +17,5 @@ urlpatterns = [
     path('administration/users/create/', views.admin_user_create, name='admin_user_create'),
     path('administration/users/<int:user_id>/edit/', views.admin_user_edit, name='admin_user_edit'),
     path('administration/users/<int:user_id>/delete/', views.admin_user_delete, name='admin_user_delete'),
+    path('stress-quiz/', views.stress_quiz, name='stress_quiz'),
 ]

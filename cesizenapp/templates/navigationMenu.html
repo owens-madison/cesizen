@@ -2,6 +2,9 @@
         <a href="{% url 'cesizenapp:home' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Informations </p>
         </a>
+        <a href="{% url 'cesizenapp:stress_quiz' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Informations </p>
+        </a>
     {% if user.is_authenticated %}
         <a href="{% url 'cesizenapp:account' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
             <p> Compte </p>

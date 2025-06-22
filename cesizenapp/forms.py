@@ -38,10 +38,10 @@ class AccountForm(forms.ModelForm):
             raise forms.ValidationError("This username is already taken.")
         return username
 
-class StressEventForm(forms.ModelForm):
-    class Meta:
-        model = StressEvent
-        fields = ['description', 'score']
+class StressEventForm(forms.Form):
+    selected = forms.BooleanField(required=False, label="")
+    description = forms.CharField(widget=forms.HiddenInput())
+    score = forms.IntegerField(widget=forms.HiddenInput())
 
 class ResultsForm(forms.ModelForm):
     class Meta:

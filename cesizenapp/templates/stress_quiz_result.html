@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+<h2>Your Stress Score: {{ total_score }}</h2>
+
+{% if result %}
+  <p>{{ result.description }}</p>
+{% else %}
+  <p>No result found for this score range.</p>
+{% endif %}
+
+<a href="{% url 'cesizenapp:stress_quiz' %}">Take the quiz again</a>
+</body>
+</html>
