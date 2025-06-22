@@ -283,6 +283,19 @@ def results_edit(request, result_id=None):
     return render(request, 'results_form.html', {'form': form})
 
 @user_passes_test(admin_check)
+def results_create(request):
+    if request.method == 'POST':
+        form = ResultsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Result created.")
+            return redirect('cesizenapp:results_list')
+    else:
+        form = ResultsForm()
+
+    return render(request, 'results_form.html', {'form': form})
+
+@user_passes_test(admin_check)
 def results_delete(request, result_id):
     result = get_object_or_404(Results, pk=result_id)
     if request.method == 'POST':

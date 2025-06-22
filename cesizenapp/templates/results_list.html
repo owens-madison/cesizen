@@ -6,14 +6,14 @@
 </head>
 <body>
 <h1>Results</h1>
-<a href="{% url 'result_create' %}">Create New Result</a>
+<a href="{% url 'cesizenapp:results_create' %}">Create New Result</a>
 <ul>
   {% for result in results %}
     <li>
       Score Range: {{ result.min_score }} - {{ result.max_score }}<br>
       {{ result.description }}
-      <a href="{% url 'result_edit' result.id %}">Edit</a> |
-      <a href="{% url 'result_delete' result.id %}">Delete</a>
+      <a href="{% url 'cesizenapp:results_edit' result.id %}">Edit</a> |
+      <a href="{% url 'cesizenapp:results_delete' result.id %}">Delete</a>
     </li>
   {% endfor %}
 </ul>
