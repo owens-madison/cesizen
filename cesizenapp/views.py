@@ -57,7 +57,6 @@ def postInformation(request):
         form = CreateInformationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Post created successfully!")
             form = CreateInformationForm()
     else:
         form = CreateInformationForm()
@@ -70,7 +69,6 @@ def edit_post(request, post_id):
         form = CreateInformationForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            messages.success(request, "Le post a été modifié avec succès.")
             return redirect('cesizenapp:home')
     else:
         form = CreateInformationForm(instance=post)
@@ -84,10 +82,6 @@ def delete_post(request, post_id):
 
     if request.user.is_superuser:
         post.delete()
-        messages.success(request, "Le post a été supprimé avec succès.")
-    else:
-        messages.error(request, "Vous n'avez pas la permission de supprimer ce post.")
-
     return redirect('cesizenapp:home')
 
 @login_required
@@ -99,7 +93,6 @@ def account(request):
             form = AccountForm(request.POST, instance=user)
             if form.is_valid():
                 form.save()
-                messages.success(request, "Your account information has been updated successfully.")
                 return redirect('cesizenapp:account')
 
         elif 'change_password' in request.POST:
@@ -107,14 +100,12 @@ def account(request):
             if pass_form.is_valid():
                 pass_form.save()
                 update_session_auth_hash(request, pass_form.user)
-                messages.success(request, "Your password has been changed successfully.")
                 return redirect('cesizenapp:account')
 
         elif 'deactivate_account' in request.POST:
             user.is_active = False
             user.save()
             logout(request)
-            messages.success(request, "Your account has been deactivated.")
             return redirect('login')
     else:
         form = AccountForm(instance=user)
@@ -167,7 +158,6 @@ def admin_user_edit(request, user_id):
         form = AdminUserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, "User updated.")
             return redirect('cesizenapp:admin_user_list')
     else:
         form = AdminUserForm(instance=user)
@@ -179,7 +169,6 @@ def admin_user_create(request):
         form = AdminUserForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "User created.")
             return redirect('cesizenapp:admin_user_list')
     else:
         form = AdminUserForm()
@@ -190,7 +179,6 @@ def admin_user_delete(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     if request.method == 'POST':
         user.delete()
-        messages.success(request, "User deleted.")
         return redirect('cesizenapp:admin_user_list')
     return render(request, 'admin_user_confirm_delete.html', {'user_obj': user})
 
@@ -237,7 +225,6 @@ def stress_event_edit(request, event_id=None):
         form = StressEventAdminForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
-            messages.success(request, "Stress event saved.")
             return redirect('cesizenapp:stress_event_list')
     else:
         form = StressEventAdminForm(instance=event)
@@ -259,7 +246,6 @@ def stress_event_delete(request, event_id):
     event = get_object_or_404(StressEvent, pk=event_id)
     if request.method == 'POST':
         event.delete()
-        messages.success(request, "Stress event deleted.")
         return redirect('cesizenapp:stress_event_list')
     return render(request, 'stress_event_confirm_delete.html', {'event': event})
 
@@ -279,7 +265,6 @@ def results_edit(request, result_id=None):
         form = ResultsForm(request.POST, instance=result)
         if form.is_valid():
             form.save()
-            messages.success(request, "Result saved.")
             return redirect('cesizenapp:results_list')
     else:
         form = ResultsForm(instance=result)
@@ -292,7 +277,6 @@ def results_create(request):
         form = ResultsForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Result created.")
             return redirect('cesizenapp:results_list')
     else:
         form = ResultsForm()
@@ -304,6 +288,5 @@ def results_delete(request, result_id):
     result = get_object_or_404(Results, pk=result_id)
     if request.method == 'POST':
         result.delete()
-        messages.success(request, "Result deleted.")
         return redirect('cesizenapp:results_list')
     return render(request, 'results_confirm_delete.html', {'result': result})
