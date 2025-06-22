@@ -18,6 +18,12 @@
             <a href="{% url 'cesizenapp:postInformation' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
                 <p> Rédiger un post </p>
             </a>
+            <a href="{% url 'cesizenapp:admin_user_list' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+                <p> AdComptes </p>
+            </a>
+            <a href="" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: black;">
+                <p> AdDiagnostic </p>
+            </a>
         {% endif %}
     {% if user.is_authenticated %}
         <a href="{% url 'cesizenapp:logout' %}" style="text-align: left; width: 200px; font-size: 120%; text-decoration: none; color: red;">

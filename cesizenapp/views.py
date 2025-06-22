@@ -1,7 +1,8 @@
+from django import forms
 from django.contrib import messages
 from django.contrib.auth import authenticate, update_session_auth_hash, logout
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest, HttpResponse
@@ -9,14 +10,11 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from .forms import CreateInformationForm, AccountForm
-from .models import Information, Diagnostic
+from .forms import CreateInformationForm, AccountForm, StressEventForm
+from .models import Information, Diagnostic, StressEvent
+
 
 # Create your views here.
-
-def home(request):
-    user = request.user
-    return render(request, 'home.html')
 
 def login(request):
     if request.method == 'POST':
@@ -95,54 +93,9 @@ def delete_post(request, post_id):
 
     return redirect('cesizenapp:home')
 
-STRESS_EVENTS = [
-    ('Décès du conjoint', 100),
-    ('Divorce', 73),
-    ('Séparation conjugale', 65),
-    ('Détention en prison ou dans une autre institution', 63),
-    ('Décès d’un membre proche de la famille', 63),
-    ('Blessure personnelle grave ou maladie', 53),
-    ('Mariage', 50),
-    ('Perte d’emploi (licenciement)', 47),
-    ('Réconciliation conjugale', 45),
-    ('Départ à la retraite', 45),
-    ('Changement important dans la santé ou le comportement d’un membre de la famille', 44),
-    ('Grossesse', 40),
-    ('Problèmes sexuels', 39),
-    ('Arrivée d’un nouveau membre dans la famille (naissance, adoption, emménagement d’un aîné, etc.)', 39),
-    ('Réorientation professionnelle majeure', 39),
-    ('Changement important de situation financière (nettement meilleur ou pire que d’habitude)', 38),
-    ('Décès d’un ami proche', 37),
-    ('Changement de domaine professionnel', 36),
-    ('Changement important dans la fréquence des disputes avec le conjoint', 35),
-    ('Souscription à un prêt hypothécaire (maison, entreprise, etc.)', 31),
-    ('Saisie d’un bien immobilier ou d’un prêt', 30),
-    ('Changement majeur de responsabilités au travail (promotion, rétrogradation, etc.)', 29),
-    ('Départ du fils ou de la fille du domicile (mariage, études, armée, etc.)', 29),
-    ('Conflits avec la belle-famille', 29),
-    ('Réalisation personnelle remarquable', 28),
-    ('Début ou fin d’un emploi du conjoint à l’extérieur du foyer', 26),
-    ('Début ou fin de la scolarité', 26),
-    ('Changement majeur dans les conditions de vie (nouveau logement, rénovation, détérioration, etc.)', 25),
-    ('Révision des habitudes personnelles (habitudes vestimentaires, fréquentations, arrêt du tabac, etc.)', 24),
-    ('Problèmes avec le supérieur hiérarchique', 23),
-    ('Changement majeur des horaires ou conditions de travail', 20),
-    ('Changement de résidence', 20),
-    ('Changement d’établissement scolaire', 20),
-    ('Changement important dans les loisirs habituels', 19),
-    ('Changement important dans l’activité religieuse', 19),
-    ('Changement important dans les activités sociales (clubs, cinéma, visites, etc.)', 18),
-    ('Souscription à un prêt (voiture, téléviseur, congélateur, etc.)', 17),
-    ('Changement majeur dans les habitudes de sommeil', 16),
-    ('Changement important dans la fréquence des réunions familiales', 15),
-    ('Changement majeur dans les habitudes alimentaires (quantité, horaires, environnement, etc.)', 15),
-    ('Vacances', 13),
-    ('Fêtes importantes', 12),
-    ('Infractions mineures à la loi (excès de vitesse, traversée hors passage piéton, etc.)', 11),
-]
-
 def diagnostic(request):
-    return render(request, 'diagnostic.html', {'events': STRESS_EVENTS})
+    events = StressEvent.objects.all()
+    return render(request, 'diagnostic.html', {'events': events})
 
 @csrf_exempt
 def submit_diagnostic(request):
@@ -224,3 +177,67 @@ def account(request):
 def custom_logout(request):
     logout(request)
     return redirect('cesizenapp:login')
+
+def admin_check(user):
+    return user.is_superuser
+
+class AdminUserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(), required=False)
+    is_superuser = forms.BooleanField(required=False, label="Admin privileges")
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'is_active', 'is_superuser']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        new_password = self.cleaned_data.get('password')
+        if new_password:
+            user.set_password(new_password)
+        if commit:
+            user.save()
+        return user
+
+@user_passes_test(admin_check)
+def admin_user_list(request):
+    search_query = request.GET.get('search', '')
+    if search_query:
+        users = User.objects.filter(username__icontains=search_query)
+    else:
+        users = User.objects.all().order_by('-is_superuser', 'username')
+
+    return render(request, 'admin_users.html', {'users': users, 'search_query': search_query})
+
+@user_passes_test(admin_check)
+def admin_user_edit(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    if request.method == 'POST':
+        form = AdminUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User updated.")
+            return redirect('cesizenapp:admin_user_list')
+    else:
+        form = AdminUserForm(instance=user)
+    return render(request, 'admin_user_edit.html', {'form': form, 'user_obj': user})
+
+@user_passes_test(admin_check)
+def admin_user_create(request):
+    if request.method == 'POST':
+        form = AdminUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User created.")
+            return redirect('cesizenapp:admin_user_list')
+    else:
+        form = AdminUserForm()
+    return render(request, 'admin_user_create.html', {'form': form})
+
+@user_passes_test(admin_check)
+def admin_user_delete(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, "User deleted.")
+        return redirect('cesizenapp:admin_user_list')
+    return render(request, 'admin_user_confirm_delete.html', {'user_obj': user})

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from cesizenapp.models import Information, Comment, Diagnostic
+from cesizenapp.models import Information, StressEvent
+
 
 class CreateUserForm(forms.ModelForm):
     class Meta:
@@ -19,10 +20,6 @@ class CreateInformationForm(forms.ModelForm):
             'alt': forms.TextInput(attrs={'style': 'outline: none; background: none; border-color: black; border-width: 1px; border-style: solid; width: 500px; height: 25px; padding-left: 25px;'}),
         }
 
-class CreateCommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['comment']
 
 class AccountForm(forms.ModelForm):
     class Meta:
@@ -40,3 +37,8 @@ class AccountForm(forms.ModelForm):
         if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError("This username is already taken.")
         return username
+
+class StressEventForm(forms.ModelForm):
+    class Meta:
+        model = StressEvent
+        fields = ['description', 'score']

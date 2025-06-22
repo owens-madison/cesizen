@@ -16,5 +16,8 @@ urlpatterns = [
     path('diagnostic/save/', views.save_diagnostic, name='save_diagnostic'),
     path('account/', views.account, name='account'),
     path('logout/', views.custom_logout, name='logout'),
-
+    path('administration/users/', views.admin_user_list, name='admin_user_list'),
+    path('administration/users/create/', views.admin_user_create, name='admin_user_create'),
+    path('administration/users/<int:user_id>/edit/', views.admin_user_edit, name='admin_user_edit'),
+    path('administration/users/<int:user_id>/delete/', views.admin_user_delete, name='admin_user_delete'),
 ]

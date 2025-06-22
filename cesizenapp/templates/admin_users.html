@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Admin: Manage Users</h2>
+<form method="get">
+  <input type="text" name="search" placeholder="Search by username" value="{{ search_query }}">
+  <button type="submit">Search</button>
+</form>
+
+<a href="{% url 'cesizenapp:admin_user_create' %}">Create New User</a>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Admin?</th>
+    <th>Active?</th>
+    <th>Actions</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td>{{ user.username }}</td>
+    <td>{{ user.first_name }} {{ user.last_name }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.is_superuser }}</td>
+    <td>{{ user.is_active }}</td>
+    <td>
+      <a href="{% url 'cesizenapp:admin_user_edit' user.id %}">Edit</a> |
+      <a href="{% url 'cesizenapp:admin_user_delete' user.id %}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
