@@ -49,6 +49,15 @@ class StressEventForm(forms.ModelForm):
             'score': forms.HiddenInput(),
         }
 
+class StressEventAdminForm(forms.ModelForm):
+    class Meta:
+        model = StressEvent
+        fields = ['description', 'score']
+        widgets = {
+            'description': forms.TextInput(attrs={'style': 'width: 100%;'}),
+            'score': forms.NumberInput(attrs={'style': 'width: 100%;'}),
+        }
+
 class ResultsForm(forms.ModelForm):
     class Meta:
         model = Results

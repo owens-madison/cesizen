@@ -7,19 +7,57 @@
 </head>
 <body>
 {% include 'navigationMenu.html' %}
-<h1 style="justify-content: center; margin-left: auto; margin-right: auto; display: flex; margin-top: 60px;">
-    {% if form.instance.pk %}Edit{% else %}Create{% endif %} Stress Event</h1>
+<h2 style="font-size: 175%; font-weight: 200; justify-content: center; margin-left: auto; margin-right: auto; display: flex; margin-top: 60px;">
+    {% if form.instance.pk %}Modifier{% else %}Créer {% endif %} un événement de stress</h2>
 <div style="display: flex; margin-left: auto; margin-right: auto; justify-content: center;">
-    <form method="post">
+    <form method="post" id="stressEventForm">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" style="text-decoration: none; align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 40px; margin-bottom: 50px; background-color: green; color: white; font-size: 100%; width: 150px; height: 40px; border:none; border-radius: 5px">
+        <button type="submit"
+                style="text-decoration: none; align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 40px; margin-bottom: 50px; background-color: green; color: white; font-size: 100%; width: 150px; height: 40px; border:none; border-radius: 5px">
             Enregistrer
         </button>
-        <a href="{% url 'cesizenapp:stress_event_list' %}"style="text-decoration: none; align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 40px; margin-bottom: 50px; background-color: darkslategrey; color: white; font-size: 100%; width: 100px; height: 40px; border:none; border-radius: 5px">
+        <a href="{% url 'cesizenapp:stress_event_list' %}"
+           style="text-decoration: none; align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 40px; margin-bottom: 50px; background-color: darkslategrey; color: white; font-size: 100%; width: 100px; height: 40px; border:none; border-radius: 5px">
             Annuler
         </a>
     </form>
 </div>
 </body>
 </html>
+
+<style>
+    #stressEventForm p {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+        focus: none;
+    }
+
+    #stressEventForm p label {
+        margin-bottom: 15px;
+        font-size: 125%;
+        text-align: center;
+    }
+
+    #stressEventForm p textarea {
+        font-size: 105%;
+        width: 100%;
+        max-width: 600px;
+        box-sizing: border-box;
+        padding: 8px;
+    }
+
+    #stressEventForm p input,
+    #stressEventForm p select {
+        width: 100%;
+        max-width: 600px;
+        box-sizing: border-box;
+        padding: 15px;
+        font-weight: 100;
+        font-size: 105%;
+        focus: none;
+        outline: none;
+    }
+</style>

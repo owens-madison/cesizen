@@ -7,7 +7,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.shortcuts import render, redirect
-from .forms import CreateInformationForm, AccountForm, StressEventForm, ResultsForm
+from .forms import CreateInformationForm, AccountForm, StressEventForm, ResultsForm, StressEventAdminForm
 from .models import Information, StressEvent, Results
 
 
@@ -234,13 +234,13 @@ def stress_event_edit(request, event_id=None):
         event = None
 
     if request.method == 'POST':
-        form = StressEventForm(request.POST, instance=event)
+        form = StressEventAdminForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
             messages.success(request, "Stress event saved.")
             return redirect('cesizenapp:stress_event_list')
     else:
-        form = StressEventForm(instance=event)
+        form = StressEventAdminForm(instance=event)
 
     return render(request, 'stress_event_form.html', {'form': form})
 
