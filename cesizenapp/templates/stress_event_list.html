@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Événements de stress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Stress Events</h1>
-  <a href="{% url 'cesizenapp:stress_event_create' %}">Create New Stress Event</a>
-  <ul>
+{% include 'navigationMenu.html' %}
+<h1 style="width: 100%; justify-content: center; margin-left: auto; margin-right: auto; display: flex; margin-top: 65px;">
+    Configurer le diagnostic de stress </h1>
+<ol style="justify-content: center; margin-left: auto; margin-right: auto; display: flex; width: 550px; flex-wrap: wrap; line-height: 55px;">
     {% for event in events %}
-      <li>
-        {{ event.description }} ({{ event.score }} points)
-        <a href="{% url 'cesizenapp:stress_event_edit' event.id %}">Edit</a> |
-        <a href="{% url 'cesizenapp:stress_event_delete' event.id %}">Delete</a>
-      </li>
+        <li style="width: 100%;">
+            {{ event.description }} ({{ event.score }} points)
+            <a href="{% url 'cesizenapp:stress_event_edit' event.id %}" style="color: black; margin-left: 25px; ">Modifier</a> |
+            <form method="post" action="{% url 'cesizenapp:stress_event_delete' event.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit"
+                        style="background: none; border: none; color: red; text-decoration: underline; cursor: pointer; padding: 0; font: inherit;"
+                        onclick="return confirm('Êtes-vous sûr·e de vouloir supprimer cet événement de stress ?');">
+                    Supprimer
+                </button>
+            </form>
+        </li>
     {% endfor %}
-  </ul>
+</ol>
+<a href="{% url 'cesizenapp:stress_event_create' %}"
+   style="text-decoration: none; align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 40px; margin-bottom: 50px; background-color: black; color: white; font-size: 100%; width: 250px; height: 40px; border:none; border-radius: 5px">
+    Nouvel événement de stress
+</a>
 </body>
 </html>

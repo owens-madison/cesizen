@@ -1,24 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Stress Event Quiz</title>
+    <meta charset="UTF-8"/>
+    <title>Diagnostic de Stress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-<h2>Stress Event Quiz</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ formset.management_form }}
-  <ul>
-  {% for form in formset %}
-    <li>
-      {{ form.selected }}
-      {{ form.description }}
-      {{ form.score }}
-    </li>
-  {% endfor %}
-  </ul>
-  <button type="submit">Submit</button>
-</form>
+{% include 'navigationMenu.html' %}
+{% if messages %}
+    {% for message in messages %}
+      <p style="margin-top: 50px; line-height: 30px;  text-align: center; display: flex; width: 60%; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px; font-weight: bold;"{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message|linebreaksbr }}
+      </p>
+    {% endfor %}
+{% endif %}
+<div style="margin-left: auto; margin-right: auto; margin-top: 50px; justify-content: center; display: flex; flex-wrap: wrap;">
+    <h1 style="width: 100%; text-align: center">L'échelle de stress de Holmes et Rahe</h1>
+    <form method="post" style="width: 750px; display: flex; flex-wrap: wrap; margin-left: 200px;" id="stressEventQuiz">
+        {% csrf_token %}
+        {{ formset.management_form }}
+            {% for form in formset %}
+                <p style="display: flex; height: 50px; line-height: 50px;">
+                    <span style="width: 25px;">{{ form.selected }}</span>
+                    <span style="width: 350px;">{{ form.description }}</span>
+                    <span style="display: none;"> {{ form.score }}</span>
+                </p>
+            {% endfor %}
+    <div style="width: 100%;">
+        <button type="submit" style="align-items: center; text-align: center; margin-left: 28%; margin-top: 40px; margin-bottom: 50px; background-color: black; color: white; font-size: 100%; width: 125px; height: 40px; border:none; border-radius: 5px">
+            Soumettre
+        </button>
+        </div>
+    </form>
+</div>
 </body>
 </html>
+
+<style>
+  #stressEventQuiz input, #stressEventQuiz select, #stressEventQuiz textarea {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 100%;
+      font-weight: 100;
+  }
+</style>

@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Informations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
 {% include 'navigationMenu.html' %}
-    <div style="display: flex; justify-content: center; margin: auto; margin-bottom: 50px; ">
+    <div style="display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom: 50px; text-align: center; flex-wrap: wrap;">
+    <h1 style="width: 100%; margin-bottom: 50px; ">Informations</h1>
         <form method="get" action="/">
             <select name="infoCategory"
-                    style="outline:none; background: none; appearance: none; font-size: medium; text-align: center; padding-left: 25px; padding-right: 25px; border: none;">
+                    style="outline:none; background: none; font-size: 110%; font-weight: 100; appearance: none; display: inline; text-align-last: center; border: none;">
     {% for code, label in category_choices %}
         <option value="{{ code }}" {% if selected_category == code %} selected {% endif %}>
             {{ label }}
@@ -24,9 +26,9 @@
     </div>
     <div style="margin:auto; width: 700px; display: block; justify-content: center;">
         {% for post in posts %}
-            <div style=" margin-bottom: 100px; border-top-style: solid; border-top-color: black; border-top-width: 1px">
+            <div style=" margin-bottom: 100px; border-style: solid; border-color: black; border-width: 1px; padding: 35px;">
                 <h2 style="text-align: center; font-size: 200%;"> {{ post.title }}</h2>
-                <h3 style="text-align: center; font-weight: lighter; font-style: italic"> {{ post.caption }}</h3>
+                <h3 style="text-align: center; font-weight: lighter; font-style: italic; margin-bottom: 25px;"> {{ post.caption }}</h3>
                 <img src="{{ post.image.url }}"
                      style="width: 200px; justify-content: center; margin: auto; display: flex; height: auto;"/>
                 <p style="line-height: 35px; font-weight: lighter"> {{ post.content }}</p>
@@ -46,16 +48,12 @@
             </div>
         {% endfor %}
         {% if post_length == 0 %}
-            <p> Il n'y a pas de posts publiés dans cette catégorie. Merci d'en choisir une autre. </p>
+            <p style = "text-align: center; line-height: 25px;">
+                Il n'y a pas de posts publiés dans cette catégorie </br>
+                <span style = "font-size: 200%; line-height: 55px;"> &#9785; </span>
+                </br> Merci d'en choisir une autre
+            </p>
         {% endif %}
     </div>
 </body>
 </html>
-
-<script>
-    {% if messages %}
-        {% for message in messages %}
-            alert("{{ message|escapejs }}");
-        {% endfor %}
-    {% endif %}
-</script>

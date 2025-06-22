@@ -205,13 +205,17 @@ def stress_quiz(request):
             for form in formset:
                 if form.cleaned_data.get('selected', False):
                     total_score += form.cleaned_data.get('score', 0)
-
-            # Find the matching Results entry
             result = Results.objects.filter(min_score__lte=total_score, max_score__gte=total_score).first()
-            return render(request, 'stress_quiz_result.html', {'total_score': total_score, 'result': result})
+
+            if result:
+                message_text = f"Votre score total de stress est {total_score}. \n {result.description}"
+            else:
+                message_text = f"Votre score total de stress est {total_score}. <br/> Aucun résultat correspondant trouvé."
+
+            messages.success(request, message_text)
+            return redirect('cesizenapp:stress_quiz')
 
     else:
-        # Initialize formset with StressEvent data
         initial_data = [{'description': se.description, 'score': se.score} for se in stress_events]
         formset = StressFormSet(initial=initial_data)
 

@@ -2,15 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Résultat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Result</h1>
-<form method="post">
+{% include 'navigationMenu.html' %}
+<h1 style = "text-align: center; font-size: 190%; margin-top: 75px; display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px; font-weight: 300;">
+    {% if form.instance.pk %}Modifier{% else %}Créer{% endif %} un résultat
+</h1>
+<div style="width: 500px; justify-content: center; margin-left: auto; margin-right: auto; display: flex; flex-wrap: wrap;">
+<form method="post" id="editResult" style="width: 500px; justify-content: center; margin-left: auto; margin-right: auto; align-items: center; font-size: 125%;">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Save</button>
-  <a href="{% url 'cesizenapp:results_list' %}">Cancel</a>
+  <button type="submit" style="background-color: green; color: white; font-size: 75%; font-weight:200; margin-top: 50px; width: 125px; height: 40px; justify-content: center; display: flex; outline: none; border: none; align-items: center; margin-left: auto; margin-right: auto">
+      Enregistrer
+  </button>
 </form>
+    </div>
+  <a href="{% url 'cesizenapp:results_list' %}" style="text-decoration: none; background-color: darkslategrey; color: white; font-size: 100%; margin-top: 50px; margin-bottom: 75px; width: 125px; height: 40px; justify-content: center; display: flex; outline: none; border: none; align-items: center; margin-left: auto; margin-right: auto">
+      Annuler
+  </a>
 </body>
 </html>
+
+<style>
+  #editResult p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  #editResult label {
+    margin-bottom: 15px;
+    font-weight: 300;
+    text-align: center;
+    width: 100%;
+  }
+  #editResult input, #editResult select, #editResult textarea {
+      width: 100%;
+      max-width: 400px;
+      font-size: 75%;
+      font-weight: 100;
+      padding: 15px;
+      outline: none;
+      focus: none;
+  }
+</style>

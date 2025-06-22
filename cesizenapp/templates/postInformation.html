@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Rédiger un post</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
 {% include 'navigationMenu.html' %}
-<h2 style = "text-align: center; display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px;"> Rediger un post </h2>
+<h2 style = "text-align: center; font-size: 190%; margin-top: 75px; display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px; font-weight: 300;"> Rediger un post </h2>
 <div style="justify-content: center; display: flex; width: 300px; margin: auto;">
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}

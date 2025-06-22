@@ -2,40 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Gérer les utilisateurs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-<h2>Admin: Manage Users</h2>
-<form method="get">
-  <input type="text" name="search" placeholder="Search by username" value="{{ search_query }}">
-  <button type="submit">Search</button>
-</form>
+{% include 'navigationMenu.html' %}
+<h2 style="text-align: center; font-size: 190%; margin-top: 75px; display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px; font-weight: 300;">
+    Gérer les utilisateurs
+</h2>
+<div>
+    <form method="get" style="justify-content: center; display: flex; margin-left: auto; margin-right: auto;">
+        <input type="text"
+               style="width: 200px; background: none; outline: none; border: none; border-bottom: 1px solid black; padding-left: 10px; font-size: 125%; font-weight: 100;"
+               name="search" placeholder="nom d’utilisateur" value="{{ search_query }}">
+        <button type="submit"
+                style="background-color: black; color: white; margin-left: 50px; font-size: 90%; width: 105px; height: 30px; outline: none; border: none; align-items: center;">
+            Search
+        </button>
+    </form>
 
-<a href="{% url 'cesizenapp:admin_user_create' %}">Create New User</a>
+    <table style="display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; text-align: left;">
+        <tr style="font-size: 125%; line-height: 45px;">
+            <th style="font-weight: 100; width: 200px; ">Nom d’utilisateur</th>
+            <th style="font-weight: 100; width: 200px;">Nom</th>
+            <th style="font-weight: 100; width: 300px;">Email</th>
+            <th style="font-weight: 100; width: 100px;">Admin ?</th>
+            <th style="font-weight: 100; width: 100px;">Actif ?</th>
+            <th style="font-weight: 100; width: 150px;">Actions</th>
+        </tr>
+        {% for user in users %}
+            <tr style="height: 50px;">
+                <td>{{ user.username }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.is_superuser }}</td>
+                <td>{{ user.is_active }}</td>
+                <td>
+                    <div style="display: flex;">
+                    <a href="{% url 'cesizenapp:admin_user_edit' user.id %}" style="color: black; margin-right: 15px;">Modifier</a>
+                    <form method="post" action="{% url 'cesizenapp:admin_user_delete' user.id %}" style="color: black; display: flex;">
+                        {% csrf_token %}
+                        <button type="submit"
+                                style="display: flex; background: none; border: none; color: red; text-decoration: underline; cursor: pointer; padding: 0; font: inherit;"
+                                onclick="return confirm('Êtes-vous sûr·e de vouloir supprimer cet utilisateur ?');">
+                            Supprimer
+                        </button>
+                    </form>
+                        </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 
-<table>
-  <tr>
-    <th>Username</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Admin?</th>
-    <th>Active?</th>
-    <th>Actions</th>
-  </tr>
-  {% for user in users %}
-  <tr>
-    <td>{{ user.username }}</td>
-    <td>{{ user.first_name }} {{ user.last_name }}</td>
-    <td>{{ user.email }}</td>
-    <td>{{ user.is_superuser }}</td>
-    <td>{{ user.is_active }}</td>
-    <td>
-      <a href="{% url 'cesizenapp:admin_user_edit' user.id %}">Edit</a> |
-      <a href="{% url 'cesizenapp:admin_user_delete' user.id %}">Delete</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-
+    <a href="{% url 'cesizenapp:admin_user_create' %}"
+       style="background-color: black; color: white; font-size: 100%; text-decoration: none; margin-top: 50px; margin-bottom: 75px; width: 150px; height: 40px; justify-content: center; display: flex; align-items: center; margin-left: auto; margin-right: auto">
+        Create New User
+    </a>
+</div>
 </body>
 </html>

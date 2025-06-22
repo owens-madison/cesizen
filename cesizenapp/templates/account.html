@@ -3,33 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Compte</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
 {% include 'navigationMenu.html' %}
-<h2>Mon compte</h2>
-{% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li class="{{ message.tags }}">{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" name="update_info">Update Info</button>
-</form>
-
-<h3>Change Password</h3>
-<form method="POST">
-  {% csrf_token %}
-  {{ pass_form.as_p }}
-  <button type="submit" name="change_password">Change Password</button>
-</form>
-
-<h3>Deactivate Account</h3>
-<form method="POST">
-  {% csrf_token %}
-  <button type="submit" name="deactivate_account" onclick="return confirm('Are you sure?');">Deactivate Account</button>
-</form>
+<div style="justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; display: flex; flex-wrap: wrap;">
+    <div style="width: 60%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; border-bottom: 1px solid black;">
+        <h2 style="width: 100%; text-align: center; font-weight: 400;">Mon Compte</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 40px; margin-bottom: 50px; background-color: black; color: white; font-size: 100%; width: 125px; height: 40px; border:none; border-radius: 5px"
+                    name="update_info">
+                Mettre à jour
+            </button>
+        </form>
+    </div>
+    <div style="width: 60%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; padding-top: 25px; border-bottom: 1px solid black;">
+        <h2 style="width: 100%; text-align: center; font-weight: 400;">Changer le mot de passe</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ pass_form.as_p }}
+            <button type="submit" style="align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 40px; margin-bottom: 50px; background-color: black; color: white; font-size: 100%; width: 125px; height: 40px; border:none; border-radius: 5px"
+                    name="change_password">
+                Changer
+            </button>
+        </form>
+    </div>
+    <div style="width: 60%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; margin-bottom: 75px; padding-top: 25px;">
+        <h2 style="width: 100%; text-align: center; font-weight: 400;">Désactiver le compte</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" style="align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 10px; background-color: red; color: white; font-size: 100%; width: 125px; height: 40px; border:none; border-radius: 5px"
+                    name="deactivate_account"
+                    onclick="return confirm('Êtes-vous sûr(e) ?');">
+                Désactiver
+            </button>
+        </form>
+    </div>
+</div>
 </body>

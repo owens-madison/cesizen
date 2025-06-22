@@ -2,20 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Configurer les Resultats</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1>Results</h1>
-<a href="{% url 'cesizenapp:results_create' %}">Create New Result</a>
-<ul>
-  {% for result in results %}
-    <li>
-      Score Range: {{ result.min_score }} - {{ result.max_score }}<br>
-      {{ result.description }}
-      <a href="{% url 'cesizenapp:results_edit' result.id %}">Edit</a> |
-      <a href="{% url 'cesizenapp:results_delete' result.id %}">Delete</a>
-    </li>
-  {% endfor %}
-</ul>
+{% include 'navigationMenu.html' %}
+<h1 style="justify-content: center; margin-left: auto; margin-right: auto; display: flex; margin-top: 60px;">
+    Resultats
+</h1>
+<div style="width: 600px; justify-content: center; margin-left: auto; margin-right: auto; display: flex; font-size: 105%; flex-wrap: wrap;">
+    {% for result in results %}
+        <p style="margin-bottom: 15px; line-height: 35px; width: 100%;">
+            <span style="font-weight: bold;">Plage de scores : {{ result.min_score }} - {{ result.max_score }}</span>
+            <br>
+            {{ result.description }}
+        </p>
+        <div style="width: 100%; margin-bottom: 40px;">
+        <a href="{% url 'cesizenapp:results_edit' result.id %}" style="color: black">Modifier</a> |
+        <form method="post" action="{% url 'cesizenapp:results_delete' result.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit"
+                    style="text-decoration: underline; background: none; border: none; color: red; cursor: pointer; padding: 0; font: inherit;"
+                    onclick="return confirm('Êtes-vous sûr·e de vouloir supprimer ce résultat ?');">
+                Supprimer
+            </button>
+        </form>
+            </div>
+    {% endfor %}
+    <a href="{% url 'cesizenapp:results_create' %}"
+       style="text-decoration: none; align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 50px; background-color: black; color: white; font-size: 100%; width: 175px; height: 40px; border:none; border-radius: 5px">
+        Nouveau résultat
+    </a>
 </body>
 </html>
