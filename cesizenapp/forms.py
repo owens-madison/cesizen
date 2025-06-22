@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from cesizenapp.models import Information, StressEvent
+from cesizenapp.models import Information, StressEvent, Results
 
 
 class CreateUserForm(forms.ModelForm):
@@ -42,3 +42,8 @@ class StressEventForm(forms.ModelForm):
     class Meta:
         model = StressEvent
         fields = ['description', 'score']
+
+class ResultsForm(forms.ModelForm):
+    class Meta:
+        model = Results
+        fields = ["min_score", "max_score", "description"]

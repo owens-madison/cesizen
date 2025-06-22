@@ -5,13 +5,9 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-from .forms import CreateInformationForm, AccountForm, StressEventForm
-from .models import Information, Diagnostic, StressEvent
+from .forms import CreateInformationForm, AccountForm
+from .models import Information
 
 
 # Create your views here.
@@ -92,51 +88,6 @@ def delete_post(request, post_id):
         messages.error(request, "Vous n'avez pas la permission de supprimer ce post.")
 
     return redirect('cesizenapp:home')
-
-def diagnostic(request):
-    events = StressEvent.objects.all()
-    return render(request, 'diagnostic.html', {'events': events})
-
-@csrf_exempt
-def submit_diagnostic(request):
-    if request.method == "POST":
-        try:
-            selected_events = request.POST.getlist('events')
-            score = sum(int(value) for value in selected_events)
-        except Exception:
-            return HttpResponseBadRequest("Invalid input")
-
-        if score >= 300:
-            result_msg = "Risque élevé : environ 80 % de chance d'un problème de santé majeur."
-        elif 150 <= score < 300:
-            result_msg = "Risque modéré : environ 50 % de chance d'un problème de santé majeur."
-        else:
-            result_msg = "Risque faible : faible probabilité de problème de santé majeur."
-
-        show_save_button = request.user.is_authenticated
-
-        html = render_to_string("diagnostic_result.html", {
-            "score": score,
-            "result_msg": result_msg,
-            "show_save_button": show_save_button
-        }, request=request)
-
-        return HttpResponse(html)
-
-    return HttpResponseBadRequest("Only POST allowed.")
-
-@require_POST
-@login_required
-def save_diagnostic(request):
-    score = request.POST.get("score")
-    result_msg = request.POST.get("result_msg")
-
-    if not score or not result_msg:
-        return HttpResponseBadRequest("Invalid data")
-
-    Diagnostic.objects.create(diagnosticUser=request.user, score=score, result=result_msg)
-    messages.success(request, "Diagnostic enregistré.")
-    return redirect('cesizenapp:diagnostic')
 
 @login_required
 def account(request):

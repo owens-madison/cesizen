@@ -26,15 +26,11 @@ class Information(models.Model):
     category = models.CharField(max_length=200, null=False, choices=CATEGORY, default='DRAFT')
     publicationDate = models.DateTimeField(auto_now_add=True, null=False)
 
-class Diagnostic(models.Model):
-    score = models.IntegerField(editable=False, null=False)
-    result = models.TextField(editable=False, null=False)
-    diagnosticDate = models.DateTimeField(auto_now_add=True, null=False)
-    diagnosticUser = models.ForeignKey(User, on_delete=models.CASCADE, editable=False, null=False)
-
 class StressEvent(models.Model):
     description = models.CharField(max_length=255)
     score = models.PositiveIntegerField()
 
-    def __str__(self):
-        return f"{self.description} ({self.score})"
+class Results(models.Model):
+    min_score = models.IntegerField()
+    max_score = models.IntegerField()
+    description = models.TextField(blank=True)
