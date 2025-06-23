@@ -7,6 +7,18 @@
 </head>
 <body>
 {% include 'navigationMenu.html' %}
+{% if messages %}
+    <div style="width: 80%; margin-top: 50px; margin-right: auto; margin-left: auto; text-align: center;">
+        {% for message in messages %}
+            <div style="margin-top: 25px;
+                        {% if message.tags == 'success' %}color: green;
+                        {% elif message.tags == 'error' %}color: red;
+                        {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 <div style="justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; display: flex; flex-wrap: wrap;">
     <div style="width: 80%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; border-bottom: 1px solid black;">
         <h2 style="width: 100%; text-align: center; font-weight: 400;">Mon Compte</h2>

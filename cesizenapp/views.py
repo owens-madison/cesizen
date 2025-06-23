@@ -109,16 +109,24 @@ def account(request):
     if request.method == 'POST':
         if 'update_info' in request.POST:
             form = AccountForm(request.POST, instance=user)
+            pass_form = PasswordChangeForm(user)
             if form.is_valid():
                 form.save()
+                messages.success(request, "Informations mises à jour avec succès.")
                 return redirect('cesizenapp:account')
+            else:
+                messages.error(request, "Échec de la mise à jour des informations.")
 
         elif 'change_password' in request.POST:
+            form = AccountForm(instance=user)
             pass_form = PasswordChangeForm(user, request.POST)
             if pass_form.is_valid():
                 pass_form.save()
                 update_session_auth_hash(request, pass_form.user)
+                messages.success(request, "Mot de passe changé avec succès.")
                 return redirect('cesizenapp:account')
+            else:
+                messages.error(request, "Échec du changement de mot de passe.")
 
         elif 'deactivate_account' in request.POST:
             user.is_active = False
@@ -131,7 +139,7 @@ def account(request):
 
     return render(request, 'account.html', {
         'form': form,
-        'pass_form': pass_form
+        'pass_form': pass_form,
     })
 
 @login_required
