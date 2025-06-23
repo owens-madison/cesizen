@@ -8,7 +8,7 @@
 <body>
 {% include 'navigationMenu.html' %}
 <div style="justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; display: flex; flex-wrap: wrap;">
-    <div style="width: 60%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; border-bottom: 1px solid black;">
+    <div style="width: 80%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; border-bottom: 1px solid black;">
         <h2 style="width: 100%; text-align: center; font-weight: 400;">Mon Compte</h2>
         <form method="POST">
             {% csrf_token %}
@@ -19,7 +19,7 @@
             </button>
         </form>
     </div>
-    <div style="width: 60%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; padding-top: 25px; border-bottom: 1px solid black;">
+    <div style="width: 80%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; padding-top: 25px; border-bottom: 1px solid black;">
         <h2 style="width: 100%; text-align: center; font-weight: 400;">Changer le mot de passe</h2>
         <form method="POST">
             {% csrf_token %}
@@ -30,7 +30,7 @@
             </button>
         </form>
     </div>
-    <div style="width: 60%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; margin-bottom: 75px; padding-top: 25px;">
+    <div style="width: 80%; justify-content: center; margin: auto; display: flex; flex-wrap: wrap; margin-bottom: 75px; padding-top: 25px;">
         <h2 style="width: 100%; text-align: center; font-weight: 400;">Désactiver le compte</h2>
         <form method="POST">
             {% csrf_token %}
@@ -43,3 +43,19 @@
     </div>
 </div>
 </body>
+
+<style>
+  .helptext {
+    display: block;
+    margin-top: 4px;
+    color: gray;
+    font-size: 0.9em;
+  }
+    input, select, textarea {
+        focus: none;
+        outline: none;
+        font-size: 105%;
+        font-weight: 100;
+  }
+</style>
+</style>
