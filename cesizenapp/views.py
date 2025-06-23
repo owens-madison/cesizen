@@ -34,11 +34,29 @@ def signup(request):
         dataPassword = request.POST.get("password")
         dataFirst_name = request.POST.get("firstname")
         dataLast_name = request.POST.get("lastname")
-        user = User.objects.create_user(email=dataEmail, username=dataUsername, password=dataPassword, first_name=dataFirst_name, last_name=dataLast_name, is_staff=False)
-        user.save()
-        return redirect('cesizenapp:login')
-    return render(request, 'signup.html')
 
+        if User.objects.filter(email=dataEmail).exists():
+            messages.error(request, "Cette adresse email est déjà utilisée.")
+            return render(request, 'signup.html', {
+                'email': dataEmail,
+                'username': dataUsername,
+                'firstname': dataFirst_name,
+                'lastname': dataLast_name,
+            })
+
+        user = User.objects.create_user(
+            email=dataEmail,
+            username=dataUsername,
+            password=dataPassword,
+            first_name=dataFirst_name,
+            last_name=dataLast_name,
+            is_staff=False
+        )
+        user.save()
+        messages.success(request, "Compte créé avec succès.")
+        return render(request, 'signup.html')
+
+    return render(request, 'signup.html')
 
 def home(request):
     informations = Information.objects.all()

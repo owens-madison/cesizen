@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Se Connecter</title>
-
 </head>
 <body>
 <img src="../static/media/logo.png"
@@ -43,6 +42,18 @@
 </div>
 <a href="{% url 'cesizenapp:login' %}"
    style="justify-content: center; margin-top: 15px; margin-bottom: 100px; margin-right: auto; margin-left: auto; display: flex; line-height: 25px; text-decoration: none; color: black;">
-    Se connecter </a>
+    Se connecter
+</a>
+<div>
+    {% if messages %}
+  <div style="justify-content: center; width: 80%; margin-bottom: 75px; margin-top: -75px; margin-left: auto; margin-right: auto; display: flex; text-align: center; font-weight: bold;">
+    {% for message in messages %}
+      <p style="color: {% if message.tags == 'error' %}#b00020{% else %}#006400{% endif %}; margin: 5px 0;">
+        {{ message }}
+      </p>
+    {% endfor %}
+  </div>
+{% endif %}
+</div>
 </body>
 </html>

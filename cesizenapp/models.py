@@ -2,7 +2,6 @@ import uuid
 from django.contrib.auth.models import User
 from django.db import models
 
-
 # Create your models here.
 
 class Information(models.Model):
@@ -15,7 +14,6 @@ class Information(models.Model):
         ('ACTIVITES', 'Activités de détente'),
         ('DEMANDER-L-AIDE', 'Quand demander de l`aide'),
         ('SOUTENIR', 'Soutenir un proche'),
-        ('DRAFT', 'Unavailable to the public')
     ]
     idInformation = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50, null=False)
