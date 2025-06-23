@@ -7,53 +7,106 @@
 </head>
 <body>
 {% include 'navigationMenu.html' %}
-    <div style="display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom: 50px; text-align: center; flex-wrap: wrap;">
+<div style="display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom: 50px; text-align: center; flex-wrap: wrap;">
     <h1 style="width: 100%; margin-bottom: 50px; ">Informations</h1>
-        <form method="get" action="/">
-            <select name="infoCategory"
-                    style="outline:none; background: none; font-size: 110%; font-weight: 100; appearance: none; display: inline; text-align-last: center; border: none;">
-    {% for code, label in category_choices %}
-        <option value="{{ code }}" {% if selected_category == code %} selected {% endif %}>
-            {{ label }}
-        </option>
-    {% endfor %}
-</select>
-            <button type="submit"
-                    style="background-color: black; color: white; width: 60px; height: 25px; border:none; margin-left: 25px; border-radius: 5px">
-                Go
-            </button>
-        </form>
-    </div>
-    <div style="margin:auto; width: 700px; display: block; justify-content: center;">
-        {% for post in posts %}
-            <div style=" margin-bottom: 100px; border-style: solid; border-color: black; border-width: 1px; padding: 35px;">
-                <h2 style="text-align: center; font-size: 200%;"> {{ post.title }}</h2>
-                <h3 style="text-align: center; font-weight: lighter; font-style: italic; margin-bottom: 25px;"> {{ post.caption }}</h3>
-                <img src="{{ post.image.url }}"
-                     style="width: 200px; justify-content: center; margin: auto; display: flex; height: auto;"/>
-                <p style="line-height: 35px; font-weight: lighter"> {{ post.content }}</p>
-                <div style="display: flex; justify-content: space-between;">
-                    {% if user.is_superuser %}
-                        <a href="{% url 'cesizenapp:edit_post' post.idInformation%}" style="width: 30%; text-decoration: none; color: black;">
+    <form method="get" action="/">
+        <select name="infoCategory"
+                style="outline:none; background: none; font-size: 110%; font-weight: 100; appearance: none; display: inline; text-align-last: center; border: none;">
+            {% for code, label in category_choices %}
+                <option value="{{ code }}" {% if selected_category == code %} selected {% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit"
+                style="background-color: black; color: white; width: 60px; height: 25px; border:none; margin-left: 25px; border-radius: 5px">
+            Go
+        </button>
+    </form>
+</div>
+<div id="informationPosts">
+    {% for post in posts %}
+        <div style=" margin-bottom: 100px; border-style: solid; border-color: black; border-width: 1px; padding: 35px;">
+            <h2 style="text-align: center; font-size: 200%;"> {{ post.title }}</h2>
+            <h3 style="text-align: center; font-weight: lighter; font-style: italic; margin-bottom: 25px;"> {{ post.caption }}</h3>
+            <img src="{{ post.image.url }}"
+                 style="width: 200px; justify-content: center; margin: auto; display: flex; height: auto;"/>
+            <p style="line-height: 35px; font-weight: lighter"> {{ post.content }}</p>
+            <div style="display: flex; justify-content: flex-start;">
+                {% if user.is_superuser %}
+                    <a href="{% url 'cesizenapp:edit_post' post.idInformation %}"
+                       style="width: 30%; text-decoration: none; color: black;">
                         <p> Modifier </p>
-                        </a>
-                        <a href="{% url 'cesizenapp:delete_post' post.idInformation %}"
-                           style="width: 30%; text-decoration: none; color: red;"
-                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?');">
-                            <p> Supprimer </p>
-                        </a>
-                    {% endif %}
-                    <p style="width: 30%; color: grey; font-weight: lighter; text-align: end"> {{ post.publicationDate }}</p>
-                </div>
+                    </a>
+                    <a href="{% url 'cesizenapp:delete_post' post.idInformation %}"
+                       style="width: 30%; text-decoration: none; color: red;"
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?');">
+                        <p> Supprimer </p>
+                    </a>
+                {% endif %}
             </div>
-        {% endfor %}
-        {% if post_length == 0 %}
-            <p style = "text-align: center; line-height: 25px;">
-                Il n'y a pas de posts publiés dans cette catégorie </br>
-                <span style = "font-size: 200%; line-height: 55px;"> &#9785; </span>
-                </br> Merci d'en choisir une autre
-            </p>
-        {% endif %}
-    </div>
+            <p style="display: block; width: 100%; color: grey; font-weight: lighter; text-align: start;"> {{ post.publicationDate|date:"d/m/Y" }}</p>
+        </div>
+    {% endfor %}
+    {% if post_length == 0 %}
+        <p style="text-align: center; line-height: 25px;">
+            Il n'y a pas de posts publiés dans cette catégorie </br>
+            <span style="font-size: 200%; line-height: 55px;"> &#9785; </span>
+            </br> Merci d'en choisir une autre
+        </p>
+    {% endif %}
+</div>
 </body>
 </html>
+
+<style>
+  #informationPosts {
+    width: 700px;
+    margin: auto;
+    display: block;
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    #informationPosts {
+      width: 95%;
+      padding: 10px;
+    }
+
+    #informationPosts > div {
+      padding: 20px;
+    }
+
+    #informationPosts h2 {
+      font-size: 140%;
+    }
+
+    #informationPosts h3 {
+      font-size: 100%;
+    }
+
+    #informationPosts img {
+      width: 100%;
+      max-width: none;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+
+    #informationPosts p {
+      font-size: 95%;
+      line-height: 1.4em;
+    }
+
+    #informationPosts div[style*="display: flex; justify-content: space-between;"] {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    #informationPosts a p {
+      font-size: 90%;
+      margin: 0;
+    }
+  }
+</style>
