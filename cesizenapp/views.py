@@ -70,14 +70,19 @@ def home(request):
     post_length = posts.count()
     return render(request, 'home.html', {'informations': informations, 'posts': posts, 'selected_category': selected_category, 'category_choices': category_choices,'post_length': post_length})
 
+
 def postInformation(request):
     if request.method == 'POST':
         form = CreateInformationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Le post a été publié avec succès.")
             form = CreateInformationForm()
+        else:
+            messages.error(request, "Échec de la publication.")
     else:
         form = CreateInformationForm()
+
     return render(request, 'postInformation.html', {'form': form, 'is_edit': False})
 
 def edit_post(request, post_id):

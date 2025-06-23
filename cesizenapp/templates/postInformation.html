@@ -7,6 +7,18 @@
 </head>
 <body>
 {% include 'navigationMenu.html' %}
+{% if messages %}
+  <div style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 50px; width: 80%;">
+    {% for message in messages %}
+      <div style="margin-bottom: 15px;
+                  {% if message.tags == 'success' %}color: green;
+                  {% elif message.tags == 'error' %}color: red;
+                  {% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
 <h2 style = "text-align: center; font-size: 190%; margin-top: 75px; display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px; font-weight: 300;"> Rediger un post </h2>
 <div style="justify-content: center; display: flex; width: 300px; margin: auto;">
 <form method="post" enctype="multipart/form-data">
@@ -61,11 +73,3 @@
 </div>
 </body>
 </html>
-
-<script>
-    {% if messages %}
-        {% for message in messages %}
-            alert("{{ message|escapejs }}");
-        {% endfor %}
-    {% endif %}
-</script>
