@@ -25,7 +25,8 @@
     {% endif %}
     <img src="{% static 'media/logo.png' %}" id="logo" style="width: 150px; height: auto;" alt="cesizen logo"/>
 </div>
-<div style="width: 95%; margin-left: 20px; margin-right: 20px; margin-top: 10px; display: flex; justify-content: center">
+<div id="adminView"
+     style="width: 95%; margin-left: 20px; margin-right: 20px; margin-top: 10px; display: flex; justify-content: center">
     {% if user.is_superuser %}
         <a href="{% url 'cesizenapp:postInformation' %}"
            style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
@@ -77,6 +78,16 @@
             margin-bottom: 15px;
             margin-left: -35px;
             margin-top: 50px;
+        }
+
+        #adminView {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #adminView a {
+            margin: 10px 0;
         }
     }
 </style>
