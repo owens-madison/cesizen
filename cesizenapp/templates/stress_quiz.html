@@ -14,7 +14,7 @@
       </p>
     {% endfor %}
 {% endif %}
-<div style="margin-left: auto; margin-right: auto; margin-top: 50px; justify-content: center; display: flex; flex-wrap: wrap;">
+<div id="diagnosticQuestions" style="margin-left: auto; margin-right: auto; margin-top: 50px; justify-content: center; display: flex; flex-wrap: wrap;">
     <h1 style="width: 100%; text-align: center">L'échelle de stress de Holmes et Rahe</h1>
     <form method="post" style="width: 750px; display: flex; flex-wrap: wrap; margin-left: 200px;" id="stressEventQuiz">
         {% csrf_token %}
@@ -43,4 +43,31 @@
       font-size: 100%;
       font-weight: 100;
   }
+
+#stressEventQuiz {
+  width: 750px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 200px;
+}
+
+#stressEventQuiz p {
+  display: flex;
+  height: 50px;
+  line-height: 50px;
+  width: 50%;
+}
+
+@media (max-width: 450px) {
+  #stressEventQuiz {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    margin-left: 25px !important;
+  }
+  #stressEventQuiz p {
+    width: 100%;
+  }
+}
 </style>
