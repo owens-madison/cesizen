@@ -23,7 +23,7 @@ def login(request):
             return redirect('cesizenapp:home')
 
         else:
-            messages.error(request, 'log-in failed')
+            messages.error(request, 'Échec de la connexion')
 
     return render(request, 'login.html')
 

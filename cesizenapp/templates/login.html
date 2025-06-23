@@ -5,28 +5,39 @@
     <title>Se Connecter</title>
 </head>
 <body>
-    {% for message in messages %}
-        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    <img src="../static/media/logo.png" style="display: flex; margin-top:150px; margin-left: auto; margin-right: auto; justify-content: center" alt="cesizen logo"/>
-    <div style="display:flex; margin:auto; margin-top:50px; justify-content: center; width:320px;">
+<img src="../static/media/logo.png"
+     style="display: flex; margin-top:150px; margin-left: auto; margin-right: auto; justify-content: center"
+     alt="cesizen logo"/>
+<div style="display:flex; margin:auto; margin-top:50px; justify-content: center; width:320px;">
     <form method="post">
         {% csrf_token %}
-      <div style="margin-bottom:50px; justify-content: space-between; display: flex; align-items: center">
-        <label for="username" style="display: inline-block; font-size: 120%; width:45%;">Nom d'utilisateur</label>
-        <input type="text" name="username" id="username" style="display: inline-block; font-size: 120%; width:50%; outline:none; border: none;
+        <div style="margin-bottom:50px; justify-content: space-between; display: flex; align-items: center">
+            <label for="username" style="display: inline-block; font-size: 120%; width:45%;">Nom d'utilisateur</label>
+            <input type="text" name="username" id="username" style="display: inline-block; font-size: 120%; width:50%; outline:none; border: none;
         border-bottom-style: solid; border-bottom-color: black; border-bottom-width: 1px; font-weight: lighter">
-      </div>
-      <div style="margin-bottom:60px; justify-content: space-between; display: flex; align-items: center">
-        <label for="password" style="display: inline-block; font-size: 120%; width:45%;">Mot de passe</label>
-        <input type="password" name="password" id="password" style="display: inline-block; width:50%; outline:none; border: none; border-bottom-style: solid;
+        </div>
+        <div style="margin-bottom:60px; justify-content: space-between; display: flex; align-items: center">
+            <label for="password" style="display: inline-block; font-size: 120%; width:45%;">Mot de passe</label>
+            <input type="password" name="password" id="password" style="display: inline-block; width:50%; outline:none; border: none; border-bottom-style: solid;
         border-bottom-color: black; border-bottom-width: 1px;">
-      </div>
+        </div>
         <input type="submit" value="Se connecter" style="justify-content: center; width:50%; height:40px; font-size: 110%; border-style: solid;
         border-color: black; border-width: 1px; border-radius: 10px; background:none; margin-left:auto; margin-right:auto; display:flex">
     </form>
 </div>
-<a href= "{% url 'cesizenapp:signup' %}" style="justify-content: center; margin-top: 25px; margin-right: auto; margin-left: auto; display: flex; line-height: 25px; text-decoration: none; color: black;"> Créer un compte </a>
+<a href="{% url 'cesizenapp:signup' %}"
+   style="justify-content: center; margin-top: 25px; margin-right: auto; margin-left: auto; display: flex; line-height: 25px; text-decoration: none; color: black;">
+    Créer un compte
+</a>
+<div>
+    {% if messages %}
+        <div style="color: red; justify-content: center; width: 80%; margin-top: 20px; margin-bottom: 75px; margin-left: auto; margin-right: auto; display: flex; text-align: center; font-weight: bold;">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
 </body>
 </html>
 
