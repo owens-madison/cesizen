@@ -1,45 +1,82 @@
 {% load static %}
-<div style="width: 95%; margin-left: 20px; margin-right: 20px; display: flex; justify-content: center">
-        <a href="{% url 'cesizenapp:home' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Informations </p>
-        </a>
-        <a href="{% url 'cesizenapp:stress_quiz' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
-            <p> Diagnostic </p>
-        </a>
+<div id="userView" style="width: 95%; margin-left: 20px; margin-right: 20px; display: flex; justify-content: center">
+    <a href="{% url 'cesizenapp:home' %}"
+       style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+        <p> Informations </p>
+    </a>
+    <a href="{% url 'cesizenapp:stress_quiz' %}"
+       style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+        <p> Diagnostic </p>
+    </a>
     {% if user.is_authenticated %}
-        <a href="{% url 'cesizenapp:account' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+        <a href="{% url 'cesizenapp:account' %}"
+           style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
             <p> Compte </p>
         </a>
-        <a href="{% url 'cesizenapp:logout' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: red;">
+        <a href="{% url 'cesizenapp:logout' %}"
+           style="margin-right: 50px; font-size: 120%; text-decoration: none; color: red;">
             <p> Se déconnecter </p>
         </a>
-        {% else %}
-        <a href="{% url 'cesizenapp:login' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+    {% else %}
+        <a href="{% url 'cesizenapp:login' %}"
+           style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
             <p> Se connecter </p>
         </a>
     {% endif %}
-    <img src="{% static 'media/logo.png' %}" style="width: 150px; height: auto;" alt="cesizen logo"/>
-    </div>
+    <img src="{% static 'media/logo.png' %}" id="logo" style="width: 150px; height: auto;" alt="cesizen logo"/>
+</div>
 <div style="width: 95%; margin-left: 20px; margin-right: 20px; margin-top: 10px; display: flex; justify-content: center">
-        {% if user.is_superuser %}
-            <a href="{% url 'cesizenapp:postInformation' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
-                <p> Rédiger un post </p>
-            </a>
-            <a href="{% url 'cesizenapp:admin_user_list' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
-                <p> AdComptes </p>
-            </a>
-            <a href="{% url 'cesizenapp:stress_event_list' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
-                <p> AdDiagnostic </p>
-            </a>
-            <a href="{% url 'cesizenapp:results_list' %}" style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
-                <p> AdRésultats </p>
-            </a>
-        {% endif %}
+    {% if user.is_superuser %}
+        <a href="{% url 'cesizenapp:postInformation' %}"
+           style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+            <p> Rédiger un post </p>
+        </a>
+        <a href="{% url 'cesizenapp:admin_user_list' %}"
+           style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+            <p> AdComptes </p>
+        </a>
+        <a href="{% url 'cesizenapp:stress_event_list' %}"
+           style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+            <p> AdDiagnostic </p>
+        </a>
+        <a href="{% url 'cesizenapp:results_list' %}"
+           style="margin-right: 50px; font-size: 120%; text-decoration: none; color: black;">
+            <p> AdRésultats </p>
+        </a>
+    {% endif %}
 </div>
 
 <style>
     body {
         font-family: 'Roboto', sans-serif;
         font-weight: 300;
+    }
+
+    #userView {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 95%;
+    }
+
+    @media (max-width: 768px) {
+        #userView {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #userView a {
+            margin: 10px 0;
+        }
+
+        #userView img {
+            order: -1; /* Move the logo to the top */
+            margin-bottom: 15px;
+            margin-left: -35px;
+            margin-top: 50px;
+        }
     }
 </style>
