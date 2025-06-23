@@ -189,6 +189,7 @@ def admin_user_edit(request, user_id):
         form = AdminUserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Informations utilisateur mises à jour.')
             return redirect('cesizenapp:admin_user_list')
     else:
         form = AdminUserForm(instance=user)
@@ -200,6 +201,7 @@ def admin_user_create(request):
         form = AdminUserForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Utilisateur créé avec succès.')
             return redirect('cesizenapp:admin_user_list')
     else:
         form = AdminUserForm()
@@ -210,6 +212,7 @@ def admin_user_delete(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     if request.method == 'POST':
         user.delete()
+        messages.success(request, 'Utilisateur supprimé.')
         return redirect('cesizenapp:admin_user_list')
     return render(request, 'admin_user_confirm_delete.html', {'user_obj': user})
 

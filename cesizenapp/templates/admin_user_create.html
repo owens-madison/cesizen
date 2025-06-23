@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un utilisateur</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+{% include 'navigationMenu.html' %}
+
+<h2 style="font-size: 200%; justify-content: center; margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom: 50px; display: flex; width: 100%;">
+    Créer un nouvel utilisateur
+</h2>
+
+{% if messages %}
+    <div style="margin: auto; width: fit-content; margin-bottom: 30px;">
+        {% for message in messages %}
+            <div style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 15px 20px; border-radius: 5px; font-size: 95%; margin-bottom: 10px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div style="justify-content: center; margin-left: auto; margin-right: auto; display: flex;">
+    <form method="post" style="width: 80%;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"
+                style="align-items: center; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 25px; background-color: green; color: white; font-size: 100%; width: 125px; height: 40px; border:none;">
+            Enregistrer
+        </button>
+    </form>
+</div>
+<a href="{% url 'cesizenapp:admin_user_list' %}"
+   style="align-items: center; text-decoration: none; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center; margin-top: 10px; background-color: black; color: white; font-size: 100%; width:250px;  height: 40px;">
+    Retour à la liste des utilisateurs
+</a>
+</body>
+</html>

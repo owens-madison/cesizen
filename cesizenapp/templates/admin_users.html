@@ -7,6 +7,15 @@
 </head>
 <body>
 {% include 'navigationMenu.html' %}
+{% if messages %}
+  <div style="margin-left: auto; margin-right: auto; margin-top: 50px; text-align: center;">
+    {% for message in messages %}
+      <p style="color: green; margin-bottom: 10px;">
+        {{ message }}
+      </p>
+    {% endfor %}
+  </div>
+{% endif %}
 <h2 style="text-align: center; font-size: 190%; margin-top: 75px; display: flex; justify-content: center; margin-left: auto; margin-right: auto; margin-bottom: 50px; font-weight: 300;">
     Gérer les utilisateurs
 </h2>
