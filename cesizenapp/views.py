@@ -124,7 +124,7 @@ def account(request):
             user.is_active = False
             user.save()
             logout(request)
-            return redirect('login')
+            return redirect('cesizenapp:login')
     else:
         form = AccountForm(instance=user)
         pass_form = PasswordChangeForm(user)
